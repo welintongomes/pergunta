@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo das Perguntas</title>
+  <!-- referir o manifesto para PWA -->
+  <link rel="manifest" href="manifest.json">
+  <!--meu icone favicon -->
+  <link rel="shortcut icon" href="icon-512.png" type="image/png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <!--meu style.css-->
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+  </style>
+  <!-- Adicione esta linha para ativar a API de voz -->
+
+  <audio id="sound-correct" src="https://assets.mixkit.co/active_storage/sfx/235/235-preview.mp3"
+    preload="auto"></audio>
+  <audio id="sound-wrong" src="https://assets.mixkit.co/active_storage/sfx/237/237-preview.mp3" preload="auto"></audio>
+  <audio id="sound-timeout" src="https://assets.mixkit.co/active_storage/sfx/1039/1039-preview.mp3"
+    preload="auto"></audio>
+  <audio id="sound-gameover" src="https://assets.mixkit.co/active_storage/sfx/1111/1111-preview.mp3"
+    preload="auto"></audio>
+  <!-- metadados para funcionar mesmao estando com tela bloqueada -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- Adicione no <head> -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#007bff">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('Service worker registered'))
+          .catch(err => console.log('Service worker error:', err));
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="mb-4" style="text-align: center;">
+      🧠Perguntas
+      <span>
+        <input class="form-check-input me-2" type="checkbox" id="auto-read">
+        <label class="form-check-label" for="auto-read">
+          🔊
+        </label>
+      </span>
+    </h1>
+    <div class="mb-3 bunn">
+      <!-- Adicione na seção de configuração do jogo, antes do seletor de dificuldade -->
+
+      <label for="category-selector">Categoria:</label>
+      <select class="form-control" id="category-selector">
+        <option value="Todas">Todas</option>
+        <!-- As categorias serão preenchidas dinamicamente -->
+      </select>
+
+      
+      <label for="difficulty">Dificuldade:</label>
+      <select id="difficulty" class="ain form-select w-25 mb-3">
+        <option value="2">Estudo (2s)</option>
+        <option value="15">Fácil (15s)</option>
+        <option value="10">Médio (10s)</option>
+        <option value="5">Difícil (5s)</option>
+      </select>
+      <button class="btn btn-primary" onclick="startGame()">🎮 Iniciar Jogo</button>
+    </div>
+    <div id="game-area">
+      <div style="text-align: center;" id="word" class="h4 mb-3"></div>
+      <div id="options" class="mb-3"></div>
+      <div style="text-align: center;" id="result" class="mb-2"></div>
+
+      <div style="text-align: center;" id="timer"></div>
+      <div style="text-align: center;" id="score" class="mt-2"></div>
+      <button class="btn btn-secondary mt-2" onclick="nextWord()">Próxima</button>
+    </div>
+    <hr>
+    <div class="statistics-box mt-4 p-3 bg-light border rounded">
+      <h4>Estatísticas</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card text-center p-2">
+            <h3 id="stat-games">0</h3>
+            <p>Jogos</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center p-2">
+            <h3 id="stat-correct">0</h3>
+            <p>Acertos</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center p-2">
+            <h3 id="stat-percentage">0%</h3>
+            <p>Taxa de Acerto</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>Adicionar Novas Perguntas</h3>
+    <div class="mb-3">
+      <!-- Adicione no formulário de administração - dentro da seção onde você adiciona novas palavras -->
+      <div class="form-group">
+        <label for="admin-category">Categoria:</label>
+        <input type="text" class="form-control" id="admin-category"
+          placeholder="Ex: Vocabulário Avançado, Expressões Idiomáticas, etc.">
+      </div>
+      <input type="text" class="form-control mb-2" id="admin-word" placeholder="Pergunta">
+      <input type="text" class="form-control mb-2" id="admin-correct" placeholder="Resposta Correta">
+      <input type="text" class="form-control mb-2" id="admin-options" placeholder="até 20 opções separadas por , ">
+      <button class="btn btn-success" onclick="addWord()">Adicionar Palavra</button>
+    </div>
+    <h4>Importar / Exportar</h4>
+    <div class="mb-3">
+      <input type="file" class="form-control mb-2" onchange="importFromJson(event)">
+      <button class="btn btn-info" onclick="exportToJson()">Exportar JSON</button>
+    </div>
+    <h5 class="mt-4">Palavras Cadastradas</h5>
+    <div id="search-box" class="input-group">
+      <span class="input-group-text">🔍</span>
+      <input type="text" class="form-control" id="search-input" placeholder="Buscar palavras...">
+      <button class="btn btn-outline-secondary" onclick="clearSearch()">Limpar</button>
+    </div>
+
+    <div class="word-list-container">
+      <ul id="word-list" class="list-group mb-3"></ul>
+      <div id="no-results">Nenhuma palavra encontrada</div>
+      <div id="loading-more" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+    </div>
+    <button id="read-question" class="btn btn-sm btn-info mb-2" onclick="readCurrentQuestion(true)">🔊 Ler
+      pergunta</button>
+  </div>
+  <!--importando meu script-->
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+body {
+    padding: 20px;
+  }
+
+  #options button {
+    margin: 5px;
+  }
+
+  #timer {
+    font-weight: bold;
+  }
+
+  #game-area {
+    display: none;
+  }
+
+  #search-box {
+    margin-bottom: 15px;
+  }
+
+  .word-list-container {
+    max-height: 224px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+  }
+
+  #no-results {
+    padding: 10px;
+    text-align: center;
+    color: #6c757d;
+    display: none;
+  }
+
+  .loading-spinner {
+    text-align: center;
+    padding: 15px;
+  }
+
+  #options {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #options>* {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  #result {
+    width: 100%;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    #options>* {
+      display: block;
+      font-size: 1.2rem;
+      padding-top: 2rem;
+    }
+
+    #result {
+      font-size: 1.2rem;
+    }
+  }
+
+
+  @media (min-width: 769px) {
+    #options {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #options>* {
+      width: auto;
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    #result {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #options>* {
+      font-size: 1.1rem;
+    }
+
+    #result {
+      font-size: 1.1rem;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    .btn-info {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .btn-info {
+      width: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .btn-success {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .btn-success {
+      width: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .btn-primary {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .btn-secondary {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .btn-primary {
+      width: auto;
+    }
+  }
+
+  .bunn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .bunn>* {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .bunn label {
+    margin-bottom: 0.25rem;
+  }
+
+  .bunn .form-select {
+    width: 100%;
+  }
+
+
+  @media (min-width: 770px) {
+    .bunn {
+      justify-content: center;
+      flex-direction: inherit;
+
+    }
+
+    .bunn>* {
+      width: auto;
+    }
+
+    .bunn .form-select {
+      width: auto;
+      margin-right: 1rem;
+    }
+
+    .bunn .form-check {
+      margin-right: 1rem;
+    }
+  }
+
+  /* Estilo específico para o select em telas menores */
+  @media (max-width: 769px) {
+    .bunn .ain {
+      width: 100% !important;
+      display: block;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  }
+
+  h3,
+  h4,
+  h5 {
+    text-align: center;
+  }
