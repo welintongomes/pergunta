@@ -176,7 +176,7 @@ function readCurrentQuestion(forcedRead = false) {
         // Usando a API nativa SpeechSynthesis
         const speech = new SpeechSynthesisUtterance(questionText);
         speech.lang = 'pt-BR';
-        speech.rate = 1.5; // Velocidade da leitura da pergunta
+        speech.rate = 1.2; // Velocidade da leitura da pergunta
 
         speech.onend = function () {
             // Após ler a pergunta, espera 2 segundos e lê as opções
@@ -191,7 +191,7 @@ function readCurrentQuestion(forcedRead = false) {
 
                 const optionsSpeech = new SpeechSynthesisUtterance(optionsText);
                 optionsSpeech.lang = 'pt-BR';
-                optionsSpeech.rate = 1.5;//velocidade da leitura das opções
+                optionsSpeech.rate = 1.2;//velocidade da leitura das opções
 
                 optionsSpeech.onend = function () {
                     // Reativa o botão quando terminar
@@ -282,7 +282,7 @@ function checkAnswer(selected) {
         if (isReadingEnabled() && window.speechSynthesis) {
             const speech = new SpeechSynthesisUtterance("Acertou!");
             speech.lang = 'pt-BR';
-            speech.rate = 1.5;
+            speech.rate = 1.2;
             speech.onend = function () {
                 isReading = false; // Leitura terminou
                 delayTimeout = setTimeout(() => nextWord(), 1000); // Reduzido para 1 segundo após a leitura
@@ -320,7 +320,7 @@ function checkAnswer(selected) {
         if (isReadingEnabled() && window.speechSynthesis) {
             const speech = new SpeechSynthesisUtterance(`Tempo!, As respostas corretas são: ${correctAnswers.join(", ")}`);
             speech.lang = 'pt-BR';
-            speech.rate = 1.5;
+            speech.rate = 1.2;
             speech.onend = function () {
                 isReading = false;
                 delayTimeout = setTimeout(() => nextWord(), 1000);
@@ -351,7 +351,7 @@ function checkAnswer(selected) {
         if (isReadingEnabled() && window.speechSynthesis) {
             const speech = new SpeechSynthesisUtterance(`Errou! As respostas corretas são: ${correctAnswers.join(", ")}`);
             speech.lang = 'pt-BR';
-            speech.rate = 1.5;
+            speech.rate = 1.2;
             speech.onend = function () {
                 isReading = false;
                 delayTimeout = setTimeout(() => nextWord(), 1000);
@@ -426,7 +426,7 @@ function endGame() {
 
         const speech = new SpeechSynthesisUtterance(message);
         speech.lang = 'pt-BR';
-        speech.rate = 1.5;
+        speech.rate = 1.2;
         window.speechSynthesis.speak(speech);
     } else if (isReadingEnabled() && window.responsiveVoice) {
         const message = isStudyMode ?
