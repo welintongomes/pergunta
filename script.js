@@ -302,7 +302,7 @@ function checkAnswer(selected) {
         }
 
     } else if (selected === null) {
-        resultDiv.textContent = "⏰ Tempo!, as Respostas corretas são: ";
+        resultDiv.textContent = "⏰ Tempo!, Resposta: ";
         resultDiv.style.color = "orange";
         document.getElementById("sound-wrong").play();
         // Atualiza apenas o total de questões
@@ -318,7 +318,7 @@ function checkAnswer(selected) {
         resultDiv.appendChild(respostaElemento); // Adiciona o novo elemento ao resultDiv
 
         if (isReadingEnabled() && window.speechSynthesis) {
-            const speech = new SpeechSynthesisUtterance(`Tempo!, As respostas corretas são: ${correctAnswers.join(", ")}`);
+            const speech = new SpeechSynthesisUtterance(`Tempo!, resposta: ${correctAnswers.join(", ")}`);
             speech.lang = 'pt-BR';
             speech.rate = 1.2;
             speech.onend = function () {
@@ -327,7 +327,7 @@ function checkAnswer(selected) {
             };
             window.speechSynthesis.speak(speech);
         } else if (isReadingEnabled() && window.responsiveVoice) {
-            responsiveVoice.speak(`Tempo!, As respostas corretas são: ${correctAnswers.join(", ")}`, "Brazilian Portuguese Female", {
+            responsiveVoice.speak(`Tempo!, resposta: ${correctAnswers.join(", ")}`, "Brazilian Portuguese Female", {
                 onend: function () {
                     isReading = false;
                     delayTimeout = setTimeout(() => nextWord(), 1000);
@@ -349,7 +349,7 @@ function checkAnswer(selected) {
             stats.total++;
         }
         if (isReadingEnabled() && window.speechSynthesis) {
-            const speech = new SpeechSynthesisUtterance(`Errou! As respostas corretas são: ${correctAnswers.join(", ")}`);
+            const speech = new SpeechSynthesisUtterance(`Errou! resposta: ${correctAnswers.join(", ")}`);
             speech.lang = 'pt-BR';
             speech.rate = 1.2;
             speech.onend = function () {
@@ -358,7 +358,7 @@ function checkAnswer(selected) {
             };
             window.speechSynthesis.speak(speech);
         } else if (isReadingEnabled() && window.responsiveVoice) {
-            responsiveVoice.speak(`Errou! As respostas corretas são: ${correctAnswers.join(", ")}`, "Brazilian Portuguese Female", {
+            responsiveVoice.speak(`Errou! resposta: ${correctAnswers.join(", ")}`, "Brazilian Portuguese Female", {
                 onend: function () {
                     isReading = false;
                     delayTimeout = setTimeout(() => nextWord(), 1000);
