@@ -339,7 +339,7 @@ function checkAnswer(selected) {
         }
 
     } else {
-        resultDiv.textContent = `❌ Errou! Respostas corretas: ${correctAnswers.join(", ")}`;
+        resultDiv.textContent = `❌ Errou! Resposta: ${correctAnswers.join(", ")}`;
         resultDiv.style.color = "red";
         document.getElementById("sound-wrong").play();
         // Atualiza apenas o total de questões
